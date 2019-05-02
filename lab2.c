@@ -2,11 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX_LIN 1000
-
-
-
-
-
 typedef struct Nodos{
   //lista de numeros
   int numero;
@@ -14,7 +9,6 @@ typedef struct Nodos{
   int posJ;
   struct Nodos *siguiente;
 } Nodo;
-
 typedef struct Listas{
   int tamano;
   Nodo *inicio;
@@ -48,7 +42,6 @@ void eliminarLista(Lista *lista){
     free(aux);
   }
 }
-
 void inicializar(Lista *lista){
   lista->inicio = NULL;
   lista->fin = NULL;
@@ -64,23 +57,24 @@ void imprimir(Lista *lista){
     actual = actual->siguiente;
   }
 }
+int tamano;
 void imprimirCM(Lista *lista){
 	Nodo *actual;
 	actual = lista->inicio;
-	int tamano = 3;
+	printf("el tamano es :%i\n",tamano);
 	while(actual != NULL){
 		printf("%i ", actual->numero);
+		//printf("el posJ %i,tamano -1 = %i \n",actual->posJ,tamano-1);
 		if(actual->posJ == tamano - 1){
 			printf("\n");
 		}
 		actual = actual->siguiente;
 	}
 }
-int tamano;
 int m,n;
 double **leermatriz(){
    //fp es un dato tipo FILE y usando fopen para abrir el archivo de entrada .txt en modo lectura 
-   FILE* fp=fopen("matriz.in","r");
+   FILE* fp=fopen("matriz1.in","r");
    // linea[MAX_LIN] es un arreglo estatico de tamaño 1000 (MAX_LINE = 1000) donde en el se almacenar cada una de las lineas en el archivo de entrada .txt
    // *p es un puntero que utilizando la funcion strtok va a separar los datos según la separacion que deseamos dar.
    char linea[MAX_LIN], *p;
@@ -113,21 +107,6 @@ double **leermatriz(){
 }
 //puntero double de dos dimensiones para almacenar las filas y columnas del archivo de entrada.
 double **matriz;
-void imprimirMatriz(double **Matriz){
-	//iniciamos un for hasta el tamaño de la matriz para las columnas
-	for (int i = 0; i <3; ++i)
-	{
-		//iniciamos un for hasta el tamaño de la matriz para las filas
-		for (int j = 0; j <3; ++j)
-		{	
-			//funcion printf para imprimir por pantalla el tipo de dato que queremos , en este caso el %f nos permite imprimir un double.
-			printf(" %f ",Matriz[i][j]);
-			//sleep(1);
-		}
-		//salto de linea
-		printf(" \n ");
-	}
-}
 int multiplicar(Lista *columna,Lista *fila){
 	Nodo *actualFila,*actualColumna;
 	actualFila = fila->inicio;
@@ -142,11 +121,9 @@ int multiplicar(Lista *columna,Lista *fila){
 			}
 			actualColumna = actualColumna->siguiente;
 		}
-		//printf("el resultado es :%i\n",resultadoM);
 		resultadoS = resultadoS + resultadoM;
 		actualFila = actualFila->siguiente;
 	}
-	//printf("el resultadoS es :%i\n",resultadoS);
 	return resultadoS;
 }
 int ModPosicion(Lista *lista,Lista *copia,int posI,int posJ){
@@ -167,10 +144,6 @@ int ModPosicion(Lista *lista,Lista *copia,int posI,int posJ){
 		aux1 = aux1->siguiente;
 		aux2 = aux2->siguiente;
 	}
-	//printf("las fila es ;\n");
-  	//imprimirF(fila);
-  	//printf("las columna es ;\n");
-  	//imprimirC(columna);
   	int N = multiplicar(fila,columna);
   	free(aux1);
   	free(aux2);
@@ -181,23 +154,21 @@ Lista *multiplicarM(Lista *lista,Lista *copia){
 	Lista *L1 = (Lista *)malloc(sizeof(Lista));
 	double N;
 	double **matriz = (double **) calloc(1000, sizeof(double*));
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < tamano; ++i)
 	{
 		matriz[i] = (double *) calloc(1000, sizeof(double)) ;
 	}
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < tamano; ++i)
   	{
-  		for (int j = 0; j < 3; ++j)
+  		for (int j = 0; j < tamano; ++j)
   		{
   			N = ModPosicion(lista,copia,i,j);
   			agregar(L1,N,i,j);
   		}
   	}
   	return L1;
-
 }
-
-int PowMatriz(Lista *lista,int Nexponente){
+Lista *PowMatriz(Lista *lista,int Nexponente){
 	Lista *copia = (Lista *)malloc(sizeof(Lista));
 	copia = lista;
 	//imprimirCM(copia);
@@ -210,18 +181,39 @@ int PowMatriz(Lista *lista,int Nexponente){
   			i++;
 		}
 	}
-	imprimirCM(lista);
-	free(lista);
+	//imprimirCM(lista);
 	free(copia);
+	return lista;
+}
+int imprimirMatriz(double **matriz){
+	int i,j;
+	for (int i = 0; i <= tamano; ++i)
+	{
+		for (int j = 0; j < tamano; ++j)
+		{
+			printf("%f  ",matriz[i][j]);
+		}
+		printf("\n");
+	}
 	return 0;
 }
+int Npotencia;
 int main(){
   matriz = leermatriz();
-  //imprimirMatriz(matriz);
+  tamano = matriz[0][0];
+  Npotencia = matriz[0][1];
+  printf("el tamano es :%i\n",tamano);
+  printf("el numero del exponente es :%i\n",Npotencia);
+  imprimirMatriz(matriz);
   Lista *lista = (Lista *)malloc(sizeof(Lista));
+  Lista *Mresultante = (Lista *)malloc(sizeof(Lista));
   inicializar(lista);
-  for (int i = 0; i <3; ++i)
-	for (int j = 0; j <3; ++j)
-		agregar(lista,matriz[i][j],i,j);
-  PowMatriz(lista,10);
+  for (int i = 1; i <= tamano; ++i)
+	for (int j = 0; j < tamano; ++j)
+		agregar(lista,matriz[i][j],i-1,j);
+  imprimirCM(lista);	
+  Mresultante = PowMatriz(lista,Npotencia);
+  imprimirCM(Mresultante);
+  //free(lista);
+  free(Mresultante);
 }
