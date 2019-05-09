@@ -108,20 +108,20 @@ funcion que se encarga de imprimir los elementos numero de la lista en forma de 
 */
 void imprimirCM(Lista *lista){
   //creamos una variable tipo nodo
-	Nodo *actual;
+  Nodo *actual;
   //inicializamos el nodo en la cabecera de la lista
-	actual = lista->inicio;
-	//iteramos para recorrer la lista
-	while(actual != NULL){
+  actual = lista->inicio;
+  //iteramos para recorrer la lista
+  while(actual != NULL){
     //imprimimos el numero del nodo actual
-		printf("%.f ", actual->numero);
+    printf("%.f ", actual->numero);
     //si la posicion j es igual al limite , imprime un salto de linea
-		if(actual->posJ == tamano - 1){
-			printf("\n");
-		}
+    if(actual->posJ == tamano - 1){
+      printf("\n");
+    }
     //igualamos el actual apuntandolo al actual siguiente
-		actual = actual->siguiente;
-	}
+    actual = actual->siguiente;
+  }
 }
 /*
 leermatriz():
@@ -178,34 +178,34 @@ sumar los resultados y retornarlo en un solo resultado.
 */
 int multiplicar(Lista *columna,Lista *fila){
   //creamos dos nodos fila y columna
-	Nodo *actualFila,*actualColumna;
+  Nodo *actualFila,*actualColumna;
   //inicializamos ambos nodos en inicio de cada lista
-	actualFila = fila->inicio;
-	actualColumna = columna->inicio;
+  actualFila = fila->inicio;
+  actualColumna = columna->inicio;
   //variables enteras en las que se almacenaran el resultados de las multiplicaciones y la suma final
-	int resultadoM,resultadoS = 0;
+  int resultadoM,resultadoS = 0;
   //recorremos la lista de las filas 
-	while(actualFila != NULL){
+  while(actualFila != NULL){
     //actualcolumna lo inicializamos en el inicio de la lista columna
-		actualColumna = columna->inicio;
+    actualColumna = columna->inicio;
     //el resultado de la multiplicacion la hacemos 0;
-		resultadoM = 0;
+    resultadoM = 0;
     //recorremos la lista de las filas
-		while(actualColumna != NULL){
+    while(actualColumna != NULL){
       //si el numero de la  la posicion en la fila es igual al numero de la posicion en las columna,se multiplican
-			if(actualFila->posI == actualColumna->posJ){
-				resultadoM = (actualFila->numero) * (actualColumna->numero);
-			}
+      if(actualFila->posI == actualColumna->posJ){
+        resultadoM = (actualFila->numero) * (actualColumna->numero);
+      }
       //cambiamos el actualcolumna apuntandolo al siguiente de este.
-			actualColumna = actualColumna->siguiente;
-		}
+      actualColumna = actualColumna->siguiente;
+    }
     //el resultado de las sumas lo vamos aumentando en el resultado de las multiplicaciones
-		resultadoS = resultadoS + resultadoM;
+    resultadoS = resultadoS + resultadoM;
     //cambias el actualfila apuntandolo al siguiente de este.
-		actualFila = actualFila->siguiente;
-	}
+    actualFila = actualFila->siguiente;
+  }
   //retornamos el resultadoS que tiene almacenado el resultado de la sumas de todas las multiplicaciones hechas.
-	return resultadoS;
+  return resultadoS;
 }
 /*
 ModPosicion:
@@ -215,33 +215,33 @@ funcion que se encarga de obtener el valor especifico de una matriz dandole como
 */
 int ModPosicion(Lista *lista,Lista *copia,int posI,int posJ){
   //creamos 2 nodos para recorrer las listas por separados
-	Nodo *aux1,*aux2;
+  Nodo *aux1,*aux2;
   //creamos dos listas para las filas y las columnas.
   //dandole el memoria con el tipo de dato que queremos , en este caso sera de tipo lista
-	Lista *fila = (Lista *)malloc(sizeof(Lista));
+  Lista *fila = (Lista *)malloc(sizeof(Lista));
   Lista *columna = (Lista *)malloc(sizeof(Lista));
   //inicializamos ambas listas con la funcion inicializar
   inicializar(fila);
   inicializar(columna);
   //inicializamos los nodos aux en el inicio de ambas listas que entran a la matriz
-	aux1 = lista->inicio;
-	aux2 = copia->inicio;
+  aux1 = lista->inicio;
+  aux2 = copia->inicio;
   //recorremos ambas listas con un solo while
-	while(aux1 != NULL && aux2 != NULL){
+  while(aux1 != NULL && aux2 != NULL){
     //comprobamos si la posicion j del aux1 es igual al j que entra como parametro de la funcion
-		if(aux1->posJ == posJ){
+    if(aux1->posJ == posJ){
       //si este es correcto , lo que hacemos es con la funcion agregar , agregar el dato y su posicion a la lista columnas
-			agregar(columna,aux1->numero,aux1->posI,aux1->posJ);
-		}
+      agregar(columna,aux1->numero,aux1->posI,aux1->posJ);
+    }
     //comprobamos si la posicion i del aux2 es igual al i que entra como parametro de la funcion
-		if(aux2->posI == posI){
+    if(aux2->posI == posI){
       //si este es correco , lo que hacemos es con la funcion agregar, agregar el dato y su posicion a la lista fila
-			agregar(fila,aux2->numero,aux2->posI,aux2->posJ);
-		}
+      agregar(fila,aux2->numero,aux2->posI,aux2->posJ);
+    }
     //ambos nodos auxiliares los apuntamos al siguiente nodo de este
-		aux1 = aux1->siguiente;
-		aux2 = aux2->siguiente;
-	}
+    aux1 = aux1->siguiente;
+    aux2 = aux2->siguiente;
+  }
   //declaramos una variable int N , la cual la igualamos a la llamada de la funcion multiplicar entre las listas fila y columna
   int N = multiplicar(fila,columna);
   //liberamos ambos auxiliares
@@ -251,7 +251,7 @@ int ModPosicion(Lista *lista,Lista *copia,int posI,int posJ){
   eliminarLista(fila);
   eliminarLista(columna);
   //retornamos el valor de N
-	return N;
+  return N;
 
 }
 /*
@@ -263,23 +263,23 @@ funcion que almacena todos los resultados segun la posicion en una nueva lista p
 */
 Lista *multiplicarM(Lista *lista,Lista *copia){
   //creamos un dato tipo lista para almacenar todos los resultados.
-	Lista *L1 = (Lista *)malloc(sizeof(Lista));
+  Lista *L1 = (Lista *)malloc(sizeof(Lista));
   //creamos una variable tipo double
-	double N;
+  double N;
   //un iterador desde i hasta el tamaño
-	for (int i = 0; i < tamano; ++i)
-  	{
+  for (int i = 0; i < tamano; ++i)
+    {
       //iteramos desde  hasta el tamano
-  		for (int j = 0; j < tamano; ++j)
-  		{
+      for (int j = 0; j < tamano; ++j)
+      {
         //igualamos N al llamado de la funcion ModPosicion
-  			N = ModPosicion(lista,copia,i,j);
+        N = ModPosicion(lista,copia,i,j);
         //agregamos N y sus respectivas posiciones a la Listas L1 con la funcion agregar 
-  			agregar(L1,N,i,j);
-  		}
-  	}
+        agregar(L1,N,i,j);
+      }
+    }
     //retornamos L1;
-  	return L1;
+    return L1;
 }
 /*
 powMatriz:
@@ -289,28 +289,28 @@ funcion que se encarga de realizar la potencia de la matriz usando la lista enla
 */
 Lista *PowMatriz(Lista *lista,int Nexponente){
   //creamos un dato tipo lista el cual sera la copia de la lista de entrada de la funcion
-	Lista *copia = (Lista *)malloc(sizeof(Lista));
+  Lista *copia = (Lista *)malloc(sizeof(Lista));
   //igualamos la lista copia con la lista de entrada
-	copia = lista;
+  copia = lista;
   //incializamos i = 0;
-	int i = 0;
+  int i = 0;
   //si el numero del exponene es inferior a dos lo que se hara es retornar la lista.
-	if(Nexponente == 1 || Nexponente < 2){
+  if(Nexponente == 1 || Nexponente < 2){
     return lista;
   //si no , hacemos la potencia
-	}else{
+  }else{
     //iteramos desde i hasta el exponete - 1
-		while(i < Nexponente - 1){
+    while(i < Nexponente - 1){
       //igualamos la lista al llamado de la funcion multiplicarM(lista,copia)
-			lista = multiplicarM(lista,copia);
+      lista = multiplicarM(lista,copia);
       //i++
-  		i++;
-		}
-	}
+      i++;
+    }
+  }
   //liberamos la copia
-	free(copia);
+  free(copia);
   //retornamos la listas
-	return lista;
+  return lista;
 }
 /*
 CalcularBytes():
@@ -320,20 +320,20 @@ funcion que se encarga de calcular el tamano en memoria de la matriz en bytes
 */
 double CalcularBytes(Lista *lista){
   //creamos un nodo
-	Nodo *actual;
+  Nodo *actual;
   //inicializamos el nodo en la cabecera de la lista
-	actual = lista->inicio;
+  actual = lista->inicio;
   //creamos un double llamado bytes
-	double Bytes = 0;
+  double Bytes = 0;
   //iteramos para recorrer la lista
-	while(actual != NULL){
+  while(actual != NULL){
     //vamos sumando los tamano de los nodo.
-		Bytes = Bytes + sizeof(actual);
+    Bytes = Bytes + sizeof(actual);
     //cambias el actual , al siguiente de este
-		actual = actual->siguiente;
-	}
+    actual = actual->siguiente;
+  }
   //retornamos bytes
-	return Bytes;
+  return Bytes;
 }
 /*
 MatrizDispersa():
@@ -343,62 +343,20 @@ funcion que se encarga de realizar una matriz dispersa en la cual se crea una li
 */
 Lista *MatrizDispersa(Lista *lista){
   //creamos una nueva lista
-	Lista *mDispersa = (Lista *)malloc(sizeof(Lista));
+  Lista *mDispersa = (Lista *)malloc(sizeof(Lista));
   //creamos un nodo
-	Nodo *nuevo;
+  Nodo *nuevo;
   //igualamos el nodo al inicio de la cabecera de la lista
-	nuevo = lista->inicio;
+  nuevo = lista->inicio;
   //iteramos hasta que el nuevo se haga null
-	while(nuevo != NULL){
+  while(nuevo != NULL){
     //si el numero de nuevo es distinto de 0 , se agrega a la nueva lisat
-		if(nuevo->numero != 0){
-			agregar(mDispersa,nuevo->numero,nuevo->posI,nuevo->posJ);
-		}
+    if(nuevo->numero != 0){
+      agregar(mDispersa,nuevo->numero,nuevo->posI,nuevo->posJ);
+    }
     //nuevo sera igual al siguiente de este.
-		nuevo = nuevo->siguiente;
-	}
+    nuevo = nuevo->siguiente;
+  }
   //retornamos la lista dipersa
-	return mDispersa;
-}
-int main(){
-  //igualamos la variable global matriz , al llamado de leermatriz
-  matriz = leermatriz();
-  //igualamos la variable global matriz al numero de la posicicion 0,0 de matriz para obtener el tamaño
-  tamano = matriz[0][0];
-  //igualamos el Npotencia al numero de la posicion 0,1 de la matriz para obtener el exponente de la potencia
-  Npotencia = matriz[0][1];
-  //imprimimos el tamaño y el numero del exponen para ver si estan de manera correcta
-  printf("\n\n\nel tamano es :%i\n",tamano);
-  printf("el numero del exponente es :%i\n",Npotencia);
-  printf("*******************************************\n\n\n");
-  //creamos 3 listas (lista,Mresultante y MDispersa) de tipo Lista
-  Lista *lista = (Lista *)malloc(sizeof(Lista));
-  Lista *Mresultante = (Lista *)malloc(sizeof(Lista));
-  Lista *MDispersa = (Lista *)malloc(sizeof(Lista));
-  //inicializamos la lista
-  inicializar(lista);
-  //hacemos dos ciclos para recorrer la matriz
-  for (int i = 1; i <= tamano; ++i)
-	for (int j = 0; j < tamano; ++j)
-    //agregamos el dato , las posiciones i y j del dato de la matriz a la lista
-		agregar(lista,matriz[i][j],i-1,j);
-  //igualamos Mresultante al llamado de la funcion PowMatriz
-  Mresultante = PowMatriz(lista,Npotencia);
-  //imprimimos la matriz resultante
-  imprimirCM(Mresultante);
-  printf("\n\n\n\n");
-  //declaramos dos variables tipo float para obtener el tamano en memoria de las matrices resultante y dispersa
-  float TamanoDispersa,TamanoMatrizNormal;
-  //igualamos el tamanomatriznormal al llamado de la funcion calcularbytes
-  TamanoMatrizNormal = CalcularBytes(Mresultante);
-  //igualamos la lista Mdispersa al llamado de la funcion matrizdispersa
-  MDispersa = MatrizDispersa(Mresultante);
-  //igualamos el tamanodispersa al llamado de la funcion calcularbytes
-  TamanoDispersa = CalcularBytes(MDispersa);
-  //imprimimos ambos valores para ser mostrados por pantallas 
-  printf("tamano en memoria de la matriz dispersa = %f bytes \n",TamanoDispersa);
-  printf("tamano en memoria de la matriz completa habria sido = %f bytes \n",TamanoMatrizNormal);
-  //eliminamos ambas matrices
-  eliminarLista(Mresultante);
-  eliminarLista(MDispersa);
+  return mDispersa;
 }
